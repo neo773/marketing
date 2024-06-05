@@ -4,4 +4,7 @@ class ToolsController < ApplicationController
 
   def show
   end
+
+  def roi_calculator
+  end
 end
