@@ -78,6 +78,14 @@ tools = [
     description: "See how a portfolio would have performed, just remember that past performance isn’t indicative of future returns.",
     category_slug: "investing",
     icon: "bar-chart-4"
+  },
+  {
+    name: "Speculator Calculator",
+    slug: "speculator-calculator",
+    intro: "What if BTC went to $100k or TSLA sunk down to $50? Forecast different scenarios and see how your investment would fare",
+    description: "What if BTC went to $100k or TSLA sunk down to $50? Forecast different scenarios and see how your investment would fare",
+    category_slug: "investing",
+    icon: "zap"
   }
 ]
 

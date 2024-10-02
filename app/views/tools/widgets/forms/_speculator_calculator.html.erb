@@ -1,0 +1,17 @@
+<%= form_with method: :get, data: { turbo_frame: frame_id } do |form| %>
+  <%= render partial: "shared/section_divider", locals: { section_name: "Speculation" } %>
+
+  <%= render partial: "shared/search_select", locals: { list: tool.searchable_assets.to_json, label: "Pick an asset to speculate on", name: "asset", required: true, placeholder: "Select asset" } %>
+
+  <div class="flex flex-col gap-2">
+    <%= form.unit_field :predicted_value, label: "How much do you think it'll be worth?", value: tool.predicted_value, unit_symbol: "$", data: { controller: "autonumeric" } %>
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <%= form.unit_field :investment_amount, label: "How much are you investing?", value: tool.investment_amount, unit_symbol: "$", data: { controller: "autonumeric" } %>
+  </div>
+
+  <div class="mt-auto">
+    <%= form.submit "Calculate" %>
+  </div>
+<% end %>

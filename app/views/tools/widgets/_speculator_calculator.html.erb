@@ -1,0 +1,21 @@
+<div class="grid grid-cols-1 p-2 bg-white border shadow-xs sm:grid-cols-2 rounded-xl">
+  <aside class="bg-gray-25 p-4 rounded-lg flex flex-col gap-4 col-span-1">
+    <%= render "tools/widgets/forms/speculator_calculator", tool: tool, frame_id: :speculation_results %>
+  </aside>
+
+  <div class="col-span-1">
+    <%= turbo_frame_tag :speculation_results, class: "group" do %>
+      <div class="hidden group-aria-[busy=true]:flex animate-pulse flex-col gap-4 p-6 rounded-lg">
+        <!-- Add loading skeleton here -->
+      </div>
+
+      <div class="flex-1 h-full group-aria-[busy=true]:hidden">
+        <% if tool.blank? %>
+          <%= render "tools/widgets/shared/blank_slate", text: "Select an asset and fill in the fields to play out different scenarios." %>
+        <% else %>
+          <%= render "tools/widgets/content/speculator_calculator", tool: tool %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
