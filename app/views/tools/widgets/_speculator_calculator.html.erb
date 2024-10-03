@@ -5,10 +5,6 @@
 
   <div class="col-span-1">
     <%= turbo_frame_tag :speculation_results, class: "group" do %>
-      <div class="hidden group-aria-[busy=true]:flex animate-pulse flex-col gap-4 p-6 rounded-lg">
-        <!-- Add loading skeleton here -->
-      </div>
-
       <div class="flex-1 h-full group-aria-[busy=true]:hidden">
         <% if tool.blank? %>
           <%= render "tools/widgets/shared/blank_slate", text: "Select an asset and fill in the fields to play out different scenarios." %>
@@ -18,4 +14,10 @@
       </div>
     <% end %>
   </div>
+</div>
+
+<div class="flex justify-center my-6">
+  <%= link_to "https://synthfinance.com", target: "_blank", class: "flex items-center gap-2 text-sm text-gray-600" do %>
+    Powered by <%= image_tag "logo-synth.svg", alt: "Synth Logo", class: "inline-block h-4" %>
+  <% end %>
 </div>
