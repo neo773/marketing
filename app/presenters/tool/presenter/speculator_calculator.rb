@@ -7,13 +7,10 @@ class Tool::Presenter::SpeculatorCalculator < Tool::Presenter
     [asset, predicted_value, investment_amount].any?(&:blank?)
   end
 
-  def searchable_assets
-    @searchable_assets ||= [
-      { name: "Bitcoin (BTC)", value: "BTC" },
-      { name: "Ethereum (ETH)", value: "ETH" },
-      { name: "Apple Inc. (AAPL)", value: "AAPL" },
-      { name: "Tesla, Inc. (TSLA)", value: "TSLA" }
-    ]
+  def searchable_stocks
+    @searchable_stocks ||= Stock.select(:name, :symbol).map do |stock|
+      { name: stock.name, value: stock.symbol }
+    end
   end
 
   def future_value
@@ -26,6 +23,34 @@ class Tool::Presenter::SpeculatorCalculator < Tool::Presenter
 
   def multiple
     predicted_value / current_price
+  end
+
+  def trend_class
+    gain >= 0 ? "from-green-50" : "from-red-50"
+  end
+
+  def multiple_class
+    gain >= 0 ? "text-green-500 text-4xl font-medium" : "text-red-500 text-4xl font-medium"
+  end
+
+  def gain_or_loss_label
+    gain >= 0 ? "Your gain" : "Your loss"
+  end
+
+  def gain_or_loss_sign
+    gain >= 0 ? "+" : ""
+  end
+
+  def asset_name
+    searchable_assets.find { |a| a[:value] == asset }&.dig(:name) || "Unknown Asset"
+  end
+
+  def asset_ticker
+    searchable_assets.find { |a| a[:value] == asset }&.dig(:value) || "Unknown Asset"
+  end
+
+  def multiple_sign
+    gain <= 0 ? "-" : ""
   end
 
   private

@@ -1,26 +1,21 @@
-<section>
-  <div class="flex flex-col gap-4 p-6 rounded-lg">
-    <div class="flex flex-col gap-4">
-      <div class="text-left">
-        <div class="text-sm text-gray-500">If you're right, your <%= number_to_currency(tool.investment_amount) %> would be worth</div>
-        <div class="text-3xl font-medium text-gray-900">
-          <%= number_to_currency(tool.future_value, precision: 2) %>
-        </div>
-      </div>
+<section class="flex flex-col gap-4 p-6  ml-2 rounded-lg bg-gradient-to-b to-white <%= tool.trend_class %>">
+  <div class="flex items-center gap-2">
+    <img src="https://logo.synthfinance.com/ticker/<%= tool.asset_ticker %>" alt="<%= tool.asset_name %>" class="size-6 rounded-full" />
+    <h2 class="text-gray-500"><%= tool.asset_name %></h2>
+  </div>
 
-      <div class="text-left">
-        <div class="text-sm text-gray-500">Multiple</div>
-        <div class="text-3xl font-medium text-gray-900">
-          <%= number_with_precision(tool.multiple, precision: 2) %>x
-        </div>
-      </div>
+  <div class="flex flex-col gap-3">
+    <p class="text-sm text-gray-500">If you're right, your <%= number_to_currency(tool.investment_amount) %> would be worth</p>
+    <p class="text-4xl font-medium"><%= number_to_currency(tool.future_value, precision: 2) %></p>
+  </div>
 
-      <div class="text-left">
-        <div class="text-sm text-gray-500">Your gain</div>
-        <div class="text-3xl font-medium text-gray-900">
-          <%= number_to_currency(tool.gain, precision: 2) %>
-        </div>
-      </div>
-    </div>
+  <div class="flex flex-col gap-3">
+    <p class="text-gray-500">Multiple</p>
+    <p class="<%= tool.multiple_class %>"><%= tool.multiple_sign %><%= number_with_precision(tool.multiple, precision: 2) %>x</p>
+  </div>
+
+  <div class="flex flex-col gap-3">
+    <p class="text-gray-500"><%= tool.gain_or_loss_label %></p>
+    <p class="text-gray-900 text-4xl font-medium"><%= tool.gain_or_loss_sign %><%= number_to_currency(tool.gain.abs, precision: 2) %></p>
   </div>
 </section>
