@@ -42,11 +42,11 @@ class Tool::Presenter::SpeculatorCalculator < Tool::Presenter
   end
 
   def asset_name
-    searchable_assets.find { |a| a[:value] == asset }&.dig(:name) || "Unknown Asset"
+    searchable_stocks.find { |a| a[:value] == asset }&.dig(:name) || "Unknown Asset"
   end
 
   def asset_ticker
-    searchable_assets.find { |a| a[:value] == asset }&.dig(:value) || "Unknown Asset"
+    searchable_stocks.find { |a| a[:value] == asset }&.dig(:value) || "Unknown Asset"
   end
 
   def multiple_sign
