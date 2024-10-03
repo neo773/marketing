@@ -1,5 +1,4 @@
 <%= form_with method: :get, data: { turbo_frame: frame_id } do |form| %>
-  <%= render partial: "shared/section_divider", locals: { section_name: "Speculation" } %>
 
   <%= render partial: "shared/search_select", locals: { list: tool.searchable_stocks.to_json, label: "Stock", name: "asset", required: true, placeholder: "Select asset" } %>
 
