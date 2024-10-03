@@ -5,21 +5,9 @@ class Tool::Presenter::DividendCalculator < Tool::Presenter
   attribute :investment_duration, :tool_integer, default: 0, min: 0
   attribute :dividend_reinvestment_frequency, :string, default: "yearly"
 
+
   def blank?
     [ stock_price, dividend_yield, total_invested, investment_duration ].all?(&:zero?)
-  end
-
-  def final_investment_value
-    yearly_data_points.last[:currentTotalValue].round(2)
-  end
-
-  def total_dividends_earned
-    yearly_data_points.last[:totalDividendsEarned].round(2)
-  end
-
-  def annual_return
-    return 0 if investment_duration.zero? || total_invested.zero?
-    ((final_investment_value / total_invested)**(1.0 / investment_duration) - 1) * 100
   end
 
   def plot_data
@@ -42,6 +30,26 @@ class Tool::Presenter::DividendCalculator < Tool::Presenter
     }
   end
 
+  def final_investment_value
+    yearly_data_points.last[:currentTotalValue].round(2)
+  end
+
+  def initial_investment
+    total_invested
+  end
+
+  def profit
+    (final_investment_value - total_invested).round(2)
+  end
+
+  def annual_return
+    ((final_investment_value / total_invested) ** (1.0 / investment_duration) - 1) * 100
+  end
+
+  def yearly_dividends
+    (total_invested * dividend_yield).round(2)
+  end
+
   private
 
   def active_record
@@ -49,48 +57,36 @@ class Tool::Presenter::DividendCalculator < Tool::Presenter
   end
 
   def yearly_data_points
-    @yearly_data_points ||= begin
-      result = [ {
-        year: 0,
-        date: Date.today,
-        currentTotalValue: total_invested,
-        totalDividendsEarned: 0
-      } ]
-      current_value = total_invested
-      total_dividends = 0
-      shares = total_invested / stock_price
-
-      investment_duration.times do |year|
-        dividends_this_year = calculate_dividends(current_value)
-        total_dividends += dividends_this_year
-
-        if dividend_reinvestment_frequency == "yearly"
-          shares += dividends_this_year / stock_price
-          current_value = shares * stock_price
-        else
-          current_value += dividends_this_year
-        end
-
-        result << {
-          year: year + 1,
-          date: Date.today + (year + 1).years,
-          currentTotalValue: current_value,
-          totalDividendsEarned: total_dividends
-        }
-      end
-
-      result
-    end
+    @yearly_data_points ||= calculate_yearly_data_points
   end
 
-  def calculate_dividends(value)
+  def calculate_yearly_data_points
+    points = []
+    current_value = total_invested
+    current_shares = total_invested / stock_price
+
+    (0..investment_duration).each do |year|
+      date = Date.current + year.years
+      points << { year: year, date: date, currentTotalValue: current_value }
+
+      reinvestment_times = reinvestment_frequency_multiplier
+      reinvestment_times.times do
+        dividend_amount = current_shares * stock_price * dividend_yield / reinvestment_times
+        additional_shares = dividend_amount / stock_price
+        current_shares += additional_shares
+      end
+
+      current_value = current_shares * stock_price
+    end
+
+    points
+  end
+
+  def reinvestment_frequency_multiplier
     case dividend_reinvestment_frequency
-    when "monthly"
-      12.times.sum { |_| value * (dividend_yield / 12 / 100) }
-    when "quarterly"
-      4.times.sum { |_| value * (dividend_yield / 4 / 100) }
-    else # yearly
-      value * (dividend_yield / 100)
+    when "monthly" then 12
+    when "quarterly" then 4
+    else 1
     end
   end
 end

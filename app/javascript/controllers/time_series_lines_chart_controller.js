@@ -7,6 +7,7 @@ export default class extends Controller {
     series: { type: Object, default: {} },
     data: { type: Array, default: [] },
     useLabels: { type: Boolean, default: true },
+    showLegend: { type: Boolean, default: true },
   };
 
   #initialElementWidth = 0;
@@ -15,10 +16,12 @@ export default class extends Controller {
   connect() {
     this.#rememberInitialElementSize();
     this.#drawGridlines();
-    this.#drawTwoLinesChart();
+    this.#drawLinesChart();
     if (this.useLabelsValue) {
       this.#drawXAxis();
-      this.#drawLegend();
+      if (this.showLegendValue) {
+        this.#drawLegend();
+      }
     }
     this.#installTooltip();
   }
@@ -53,7 +56,7 @@ export default class extends Controller {
     }
   }
 
-  #drawTwoLinesChart() {
+  #drawLinesChart() {
     const x = this.#d3XScale;
     const y = this.#d3YScale;
   
@@ -67,7 +70,7 @@ export default class extends Controller {
       .attr("fill", "none")
       .attr("stroke", d => this.seriesValue[d.key].strokeClass)
       .attr("stroke-width", 3)
-      .attr("stroke-dasharray", (d, i) => i === 0 ? "9" : null)
+      .attr("stroke-dasharray", (d, i) => this.#d3Series.length > 1 && i === 0 ? "9" : null)
       .attr("stroke-linecap", "round")
       .attr("d", d => {
         return d3.line()
