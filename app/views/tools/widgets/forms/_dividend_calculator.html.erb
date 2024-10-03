@@ -15,7 +15,7 @@
   </div>
 
   <div class="flex flex-col gap-2">
-    <%= form.unit_field :investment_duration, label: "Investment duration", value: tool.investment_duration, label_right: "years", data: { controller: "autonumeric", autonumeric_options_value: { decimalPlaces: 0 } } %>
+    <%= form.unit_field :investment_duration, label: "Investment duration", value: tool.investment_duration, data: { controller: "autonumeric", autonumeric_options_value: { decimalPlaces: 0 } } %>
   </div>
 
   <%= render partial: "shared/select", locals: { name: "dividend_reinvestment_frequency", label: "Dividend reinvestment frequency", value: tool.dividend_reinvestment_frequency, options: [["Yearly", "yearly"], ["Quarterly", "quarterly"], ["Monthly", "monthly"]] } %>
