@@ -56,7 +56,7 @@ export default class extends Controller {
   #drawTwoLinesChart() {
     const x = this.#d3XScale;
     const y = this.#d3YScale;
-
+  
     this.#d3Content
       .append("g")
       .selectAll()
@@ -75,10 +75,15 @@ export default class extends Controller {
           .y(d => y(d[1] - d[0]))
           .curve(d3.curveMonotoneX)(d);
       });
-
-    this.#createGradient("line-gradient-1", "#7839ee");
-    this.#createGradient("line-gradient-2", "#f23e94");
-
+  
+    // Adjust gradient creation for single line
+    if (this.#d3Series.length > 1) {
+      this.#createGradient("line-gradient-1", "#7839ee");
+      this.#createGradient("line-gradient-2", "#f23e94");
+    } else {
+      this.#createGradient("line-gradient-1", "#7839ee");
+    }
+  
     this.#d3Content
       .append("g")
       .selectAll()
@@ -166,23 +171,19 @@ export default class extends Controller {
   }
 
   #drawLegend() {
-    const legend = this.#d3Content
-      .append("g");
-
+    const legend = this.#d3Content.append("g");
+  
     let offsetX = 0;
     Object.values(this.seriesValue).forEach((series, i) => {
-      const item = legend
-        .append("g")
-        .attr("transform", `translate(${offsetX}, 0)`);
-
+      const item = legend.append("g").attr("transform", `translate(${offsetX}, 0)`);
+  
       item.append("rect")
         .attr("height", 12)
         .attr("width", 4)
         .attr("class", series.fillClass)
         .attr("rx", 2)
         .attr("ry", 2);
-
-
+  
       item.append("text")
         .attr("x", 10)
         .attr("y", 10)
@@ -191,11 +192,11 @@ export default class extends Controller {
         .style("font-size", "14px")
         .style("font-weight", "400")
         .text(series.name);
-
+  
       const itemWidth = item.node().getBBox().width;
       offsetX += itemWidth + 12;
     });
-
+  
     const legendWidth = legend.node().getBBox().width;
     legend.attr("transform", `translate(${this.#contentWidth / 2 - legendWidth / 2}, ${this.#contentHeight})`);
   }
@@ -217,11 +218,11 @@ export default class extends Controller {
     return dot;
   };
 
-
   #installTooltip() {
-    const dot1 = this.#createDot("focus", this.seriesValue.interest.fillClass);
-    const dot2 = this.#createDot("focus", this.seriesValue.contributed.fillClass);
-
+    const dots = Object.values(this.seriesValue).map(series => 
+      this.#createDot("focus", series.fillClass)
+    );
+  
     this.#d3Content
       .append("rect")
       .attr("width", this.#contentWidth)
@@ -229,29 +230,29 @@ export default class extends Controller {
       .attr("fill", "none")
       .attr("pointer-events", "all")
       .on("mouseover", () => {
-        dot1.style("display", null);
-        dot2.style("display", null);
+        dots.forEach(dot => dot.style("display", null));
       })
       .on("mouseout", (event) => {
         const hoveringOnGuideline = event.toElement?.classList.contains("guideline");
         if (!hoveringOnGuideline) {
           this.#d3Content.selectAll(".guideline").remove();
           this.#d3Tooltip.style("opacity", 0);
-          dot1.style("display", "none");
-          dot2.style("display", "none");
+          dots.forEach(dot => dot.style("display", "none"));
         }
       })
       .on("mousemove", (event) => {
         const x = this.#d3XScale;
         const d = this.#findDatumByPointer(event);
-
+  
         const dataX = x(d.date);
-
-        dot1.attr("transform", `translate(${dataX}, ${this.#d3YScale(d.interest)})`);
-        dot2.attr("transform", `translate(${dataX}, ${this.#d3YScale(d.contributed)})`);
-
+  
+        dots.forEach((dot, i) => {
+          const key = Object.keys(this.seriesValue)[i];
+          dot.attr("transform", `translate(${dataX}, ${this.#d3YScale(d[key])})`);
+        });
+  
         this.#d3Content.selectAll(".guideline").remove();
-
+  
         this.#d3Content
           .insert("line", ":first-child")
           .attr("class", "guideline")
@@ -263,27 +264,25 @@ export default class extends Controller {
           .attr("y1", 0 + this.#margin.top)
           .attr("x2", dataX)
           .attr("y2", this.#contentHeight - this.#margin.bottom);
-
-        const tooltipX = dataX;
-        const tooltipY = this.#d3YScale(d.contributed);
-        const tooltipMarginX = 50;
-
-        this.#d3Tooltip
+          const tooltipX = dataX;
+          const tooltipY = this.#d3YScale(d[Object.keys(this.seriesValue)[0]]);
+          const tooltipMarginX = 50;
+          this.#d3Tooltip
           .html(this.#tooltipTemplate(d))
           .style("opacity", 1)
           .style("z-index", 999)
           .style("left", tooltipX + tooltipMarginX + "px")
           .style("top", tooltipY + "px")
           .style("transform", () => {
-            const tooltipElement = this.#d3Tooltip.node();
-            const realTooltipWidth = tooltipElement.getBoundingClientRect().width;
-            const mouseX = event.clientX;
-            const overflowX = mouseX + realTooltipWidth - document.body.clientWidth + tooltipMarginX;
-            const adjustedX = overflowX > 0 ? `translateX(${-(overflowX + realTooltipWidth, realTooltipWidth + tooltipMarginX)}px)` : '';
-            return adjustedX;
+          const tooltipElement = this.#d3Tooltip.node();
+          const realTooltipWidth = tooltipElement.getBoundingClientRect().width;
+          const mouseX = event.clientX;
+          const overflowX = mouseX + realTooltipWidth - document.body.clientWidth + tooltipMarginX;
+          const adjustedX = overflowX > 0 ? translateX(`${-(overflowX + realTooltipWidth, realTooltipWidth + tooltipMarginX)}px`) : '';
+          return adjustedX;
           });
-      });
-  }
+          });
+        }
 
   #tooltipTemplate(datum) {
     const formatCurrency = value => new Intl.NumberFormat(navigator.language, {

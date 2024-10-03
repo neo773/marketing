@@ -1,0 +1,21 @@
+<div class="relative p-4">
+  <div class="flex gap-12">
+    <div>
+      <p class="text-sm text-gray-500">Final Investment Value</p>
+      <p class="text-xl font-medium"><%= number_to_currency(tool.final_investment_value) %></p>
+    </div>
+    <div>
+      <p class="text-sm text-gray-500">Total Dividends Earned</p>
+      <p class="text-xl font-medium"><%= number_to_currency(tool.total_dividends_earned) %></p>
+    </div>
+    <div>
+      <p class="text-sm text-gray-500">Annual Return</p>
+      <p class="text-xl font-medium"><%= number_to_percentage(tool.annual_return, precision: 2) %></p>
+    </div>
+  </div>
+
+  <%= tag.div class: "h-96 mt-6", data: {
+        controller: "time-series-lines-chart",
+        time_series_lines_chart_series_value: tool.legend_data.to_json,
+        time_series_lines_chart_data_value: tool.plot_data.to_json } %>
+</div>

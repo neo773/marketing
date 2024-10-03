@@ -5,7 +5,7 @@
   <p class="text-3xl font-medium"><%= number_to_currency(tool.total_value) %></p>
 
   <%= tag.div class: "h-96 mt-6", data: {
-        controller: "time-series-two-lines-chart",
-        time_series_two_lines_chart_series_value: tool.legend_data.to_json,
-        time_series_two_lines_chart_data_value: tool.plot_data.to_json } %>
+        controller: "time-series-lines-chart",
+        time_series_lines_chart_series_value: tool.legend_data.to_json,
+        time_series_lines_chart_data_value: tool.plot_data.to_json } %>
 </section>

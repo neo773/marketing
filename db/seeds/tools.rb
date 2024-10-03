@@ -78,6 +78,14 @@ tools = [
     description: "See how a portfolio would have performed, just remember that past performance isn’t indicative of future returns.",
     category_slug: "investing",
     icon: "bar-chart-4"
+  },
+  {
+    name: "Dividend Calculator",
+    slug: "dividend-calculator",
+    intro: "See how much you can earn from a dividend-paying stock and how reinvesting dividends can increase your returns over time.",
+    description: "See how much you can earn from a dividend-paying stock and how reinvesting dividends can increase your returns over time.",
+    category_slug: "investing",
+    icon: "bar-chart-4"
   }
 ]
 

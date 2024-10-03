@@ -29,6 +29,8 @@ class ToolsController < ApplicationController
         # ROI Calculator
         :amount_invested, :amount_returned, :investment_period, :investment_length,
         # Stock Portfolio Backtest
-        :benchmark_stock, :investment_amount, :start_date, :end_date, { stocks: [], stock_allocations: [] }
+        :benchmark_stock, :investment_amount, :start_date, :end_date, { stocks: [], stock_allocations: [] },
+        # Dividend Calculator
+        :stock_price, :dividend_yield, :total_invested, :investment_duration, :dividend_reinvestment_frequency
     end
 end

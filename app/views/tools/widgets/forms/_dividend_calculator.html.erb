@@ -1,0 +1,26 @@
+<%= form_with method: :get, data: { turbo_frame: frame_id } do |form| %>
+  <div class="flex flex-col gap-2">
+  <span class="text-sm text-gray-900 font-medium">Dividend stock</span>
+    <%= form.unit_field :stock_price, label: "Stock price", value: tool.stock_price, unit_symbol: "$", data: { controller: "autonumeric" } %>
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <%= form.unit_field :dividend_yield, label: "Dividend yield", value: tool.dividend_yield, label_right: "%", data: { controller: "autonumeric", autonumeric_options_value: { decimalPlaces: 2 } } %>
+  </div>
+
+
+  <div class="flex flex-col gap-2">
+  <span class="text-sm text-gray-900 font-medium">Investment parameters</span>
+    <%= form.unit_field :total_invested, label: "Total invested", value: tool.total_invested, unit_symbol: "$", data: { controller: "autonumeric" } %>
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <%= form.unit_field :investment_duration, label: "Investment duration", value: tool.investment_duration, label_right: "years", data: { controller: "autonumeric", autonumeric_options_value: { decimalPlaces: 0 } } %>
+  </div>
+
+  <%= render partial: "shared/select", locals: { name: "dividend_reinvestment_frequency", label: "Dividend reinvestment frequency", value: tool.dividend_reinvestment_frequency, options: [["Yearly", "yearly"], ["Quarterly", "quarterly"], ["Monthly", "monthly"]] } %>
+
+  <div class="mt-auto">
+    <%= form.submit "Calculate" %>
+  </div>
+<% end %>
