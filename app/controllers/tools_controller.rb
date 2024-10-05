@@ -29,6 +29,9 @@ class ToolsController < ApplicationController
         # ROI Calculator
         :amount_invested, :amount_returned, :investment_period, :investment_length,
         # Stock Portfolio Backtest
-        :benchmark_stock, :investment_amount, :start_date, :end_date, { stocks: [], stock_allocations: [] }
+        :benchmark_stock, :investment_amount, :start_date, :end_date, { stocks: [], stock_allocations: [] },
+        # Cost of Parenting Calculator
+        :yearly_household_income, :children, :estimated_monthly_expenses, :one_time_expenses,
+        :will_need_daycare, :will_go_to_private_school, :will_go_to_college, :will_need_private_tutoring, :will_go_to_summer_camp, :will_play_sports
     end
 end

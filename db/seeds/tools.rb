@@ -78,6 +78,14 @@ tools = [
     description: "See how a portfolio would have performed, just remember that past performance isn’t indicative of future returns.",
     category_slug: "investing",
     icon: "bar-chart-4"
+  },
+  {
+    name: "Cost of Parenting Calculator",
+    slug: "cost-of-parenting-calculator",
+    intro: "Calculate the estimated cost of raising children from birth to adulthood.",
+    description: "See how much it costs to raise children based on your income and expenses.",
+    category_slug: "family",
+    icon: "baby"
   }
 ]
 

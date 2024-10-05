@@ -1,0 +1,17 @@
+<div class="flex flex-col md:flex-row p-2 bg-white border shadow-xs rounded-xl">
+  <aside class="w-full md:w-2/5 bg-gray-25 p-4 rounded-lg flex flex-col gap-4 mb-4 md:mb-0">
+    <%= render "tools/widgets/forms/cost_of_parenting_calculator", tool: tool, frame_id: :cost_of_parenting_results %>
+  </aside>
+
+  <div class="w-full md:w-3/5 md:pl-4">
+    <%= turbo_frame_tag :cost_of_parenting_results do %>
+      <div class="flex-1 h-full">
+        <% if tool.blank? %>
+          <%= render "tools/widgets/shared/blank_slate", text: "Fill in the fields to calculate the cost of parenting." %>
+        <% else %>
+          <%= render "tools/widgets/content/cost_of_parenting_calculator", tool: tool %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

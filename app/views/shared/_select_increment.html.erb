@@ -1,0 +1,28 @@
+<%# locals: (label:, value:, min: 0, max: nil, name:, decrement_callback: nil, increment_callback: nil) %>
+<div class="form-field" data-controller="select-increment"
+     <%= "data-select-increment-decrement-callback-value=#{decrement_callback}" if decrement_callback %>
+     <%= "data-select-increment-increment-callback-value=#{increment_callback}" if increment_callback %>>
+  <div class="flex items-center justify-between">
+    <label class="form-field__label" for="<%= name %>"><%= label %></label>
+  </div>
+  <div class="flex items-center">
+    <span class="pl-3 pb-2 pt-1 text-sm text-gray-500"></span>
+    <input class="form-field__input pl-0"
+           type="number" 
+           id="<%= name %>" 
+           name="<%= name %>" 
+           value="<%= value %>" 
+           min="<%= min %>" 
+           <%= "max=#{max}" if max %>
+           data-select-increment-target="input"
+           data-action="change->select-increment#onChange">
+  </div>
+  <div class="flex flex-row items-center justify-between gap-1 absolute right-3 top-1/2 transform -translate-y-1/2">
+    <button type="button" data-action="click->select-increment#increment" class="flex justify-center p-[3px] items-center w-[24px] h-[24px] bg-white border border-black/10 rounded-[7px] text-gray-500 shadow-xs">
+      <%= lucide_icon "plus", class: "stroke-[2px]" %>
+    </button>
+    <button type="button" data-action="click->select-increment#decrement" class="flex justify-center p-[3px] items-center w-[24px] h-[24px] bg-white border border-black/10 rounded-[7px] text-gray-500 shadow-xs">
+      <%= lucide_icon "minus", class: "stroke-[2px]" %>
+    </button>
+  </div>
+</div>

@@ -66,8 +66,12 @@ class ToolArray < ActiveModel::Type::Value
   end
 end
 
+class ToolBoolean < ActiveModel::Type::Boolean
+end
+
 ActiveModel::Type.register :tool_float, ToolFloat
 ActiveModel::Type.register :tool_integer, ToolInteger
 ActiveModel::Type.register :tool_percentage, ToolPercentage
 ActiveModel::Type.register :tool_enum, ToolEnum
 ActiveModel::Type.register :tool_array, ToolArray
+ActiveModel::Type.register :tool_boolean, ToolBoolean

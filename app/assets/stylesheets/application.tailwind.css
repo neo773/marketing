@@ -33,6 +33,11 @@
     @apply text-gray-900;
   }
 
+  .form-field__checkbox {
+    @apply bg-white text-black rounded-sm border-black/10;
+    @apply focus:outline-none focus:ring-0 focus:opacity-100;
+  }
+
   .form-field__submit {
     @apply w-full p-3 text-center text-white bg-black rounded-lg cursor-pointer hover:bg-gray-700;
   }

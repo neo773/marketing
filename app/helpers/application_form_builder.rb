@@ -53,6 +53,18 @@ class ApplicationFormBuilder < ActionView::Helpers::FormBuilder
     end
   end
 
+  def check_box(method, options = {}, checked_value = "1", unchecked_value = "0")
+    default_options = { class: "form-field form-field__checkbox" }
+    merged_options = default_options.merge(options)
+
+    @template.tag.div do
+      @template.tag.div(class: "flex") do
+        super(method, merged_options, checked_value, unchecked_value) +
+        label(method, options[:label], class: "ml-2 text-sm text-gray-900")
+      end
+    end
+  end
+
   def submit(value = nil, options = {})
     value, options = nil, value if value.is_a?(Hash)
     default_options = { class: "form-field__submit" }
