@@ -29,6 +29,8 @@ class ToolsController < ApplicationController
         # ROI Calculator
         :amount_invested, :amount_returned, :investment_period, :investment_length,
         # Stock Portfolio Backtest
-        :benchmark_stock, :investment_amount, :start_date, :end_date, { stocks: [], stock_allocations: [] }
+        :benchmark_stock, :investment_amount, :start_date, :end_date, { stocks: [], stock_allocations: [] },
+        # Early Mortgage Payoff vs Investing Calculator
+        :loan_amount, :loan_term, :interest_rate, :elapsed_time, :additional_payment, :annual_investment_return
     end
 end

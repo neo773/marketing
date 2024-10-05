@@ -1,0 +1,27 @@
+<div class="relative p-4">
+  <div class="flex gap-12">
+    <div>
+      <p class="text-sm text-gray-500">Interest savings</p>
+      <p class="text-xl font-medium"><%= number_to_currency(tool.interest_savings) %></p>
+    </div>
+    <div>
+      <p class="text-sm text-gray-500">New payoff date</p>
+      <p class="text-xl font-medium"><%= tool.new_payoff_date.strftime("%B %Y") %></p>
+    </div>
+    <div>
+      <p class="text-sm text-gray-500">Investment balance</p>
+      <p class="text-xl font-medium"><%= number_to_currency(tool.investment_balance) %></p>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <p class="text-sm text-gray-500">Net difference (Investment value - Interest savings)</p>
+    <p class="text-xl font-medium"><%= number_to_currency(tool.net_difference) %></p>
+  </div>
+
+  <%= tag.div class: "h-96 mt-6", data: {
+        controller: "time-series-two-lines-chart",
+        time_series_two_lines_chart_data_value: tool.plot_data.to_json,
+        time_series_two_lines_chart_series_value: tool.legend_data.to_json
+      } %>
+</div>

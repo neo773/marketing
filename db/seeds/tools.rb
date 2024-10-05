@@ -78,6 +78,14 @@ tools = [
     description: "See how a portfolio would have performed, just remember that past performance isn’t indicative of future returns.",
     category_slug: "investing",
     icon: "bar-chart-4"
+  },
+  {
+    name: "Early Mortgage Payoff vs Investing Calculator",
+    slug: "early-mortgage-payoff-vs-investing-calculator",
+    intro: "See the impact of making extra payments on your mortgage or investing the difference",
+    description: "See the impact of making extra payments on your mortgage or investing the difference",
+    category_slug: "investing",
+    icon: "home"
   }
 ]
 
