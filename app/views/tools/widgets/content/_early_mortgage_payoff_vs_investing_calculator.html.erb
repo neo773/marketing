@@ -12,30 +12,34 @@
       </div>
     </div>
   </div>
-  <div class="grid grid-cols-2 gap-4 mb-6">
-    <div>
-      <p class="text-sm text-gray-500 mb-2">Original interest</p>
-      <p class="text-xl font-medium"><%= number_to_currency(tool.total_interest) %></p>
+  <div class="flex mb-6">
+    <div class="flex-1 flex flex-col gap-4">
+      <div>
+        <p class="text-sm text-gray-500 mb-2">Original interest</p>
+        <p class="text-xl font-medium"><%= number_to_currency(tool.total_interest) %></p>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500 mb-2">Original principal + Interest</p>
+        <p class="text-xl font-medium"><%= number_to_currency(tool.total_payments) %></p>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500 mb-2">Original payoff date</p>
+        <p class="text-xl font-medium"><%= tool.original_payoff_date.strftime("%B %Y") %></p>
+      </div>
     </div>
-    <div>
-      <p class="text-sm text-gray-500 mb-2">Interest with extra payments</p>
-      <p class="text-xl font-medium"><%= number_to_currency(tool.total_interest_with_extra_payments) %></p>
-    </div>
-    <div>
-      <p class="text-sm text-gray-500 mb-2">Original principal + Interest</p>
-      <p class="text-xl font-medium"><%= number_to_currency(tool.total_payments) %></p>
-    </div>
-    <div>
-      <p class="text-sm text-gray-500 mb-2">Principal + Interest with extra payments</p>
-      <p class="text-xl font-medium"><%= number_to_currency(tool.total_payments_with_extra) %></p>
-    </div>
-    <div>
-      <p class="text-sm text-gray-500 mb-2">Original payoff date</p>
-      <p class="text-xl font-medium"><%= tool.original_payoff_date.strftime("%B %Y") %></p>
-    </div>
-    <div>
-      <p class="text-sm text-gray-500 mb-2">New payoff date</p>
-      <p class="text-xl font-medium"><%= tool.new_payoff_date.strftime("%B %Y") %></p>
+    <div class="flex-1 flex flex-col gap-4 border-l border-gray-200 pl-4">
+      <div>
+        <p class="text-sm text-gray-500 mb-2">Interest with extra payments</p>
+        <p class="text-xl font-medium"><%= number_to_currency(tool.total_interest_with_extra_payments) %></p>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500 mb-2">Principal + Interest with extra payments</p>
+        <p class="text-xl font-medium"><%= number_to_currency(tool.total_payments_with_extra) %></p>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500 mb-2">New payoff date</p>
+        <p class="text-xl font-medium"><%= tool.new_payoff_date.strftime("%B %Y") %></p>
+      </div>
     </div>
   </div>
   <div class="mb-6 bg-gradient-to-b to-white from-blue-50 p-6 rounded-2xl flex flex-col gap-4">
