@@ -1,27 +1,71 @@
 <div class="relative p-4">
-  <div class="flex gap-12">
+  <div class="mb-6 bg-gradient-to-b to-white from-green-50 p-6 rounded-2xl flex flex-col gap-4">
+    <div class="text-sm text-gray-500 flex items-center gap-1"><%= lucide_icon("circle-dollar-sign", class: "size-6 text-green-600") %>If you paid an additional <span class="text-green-600"><%= number_to_currency(tool.additional_payment) %></span> every month</div>
+    <div class="flex justify-between">
+      <div>
+        <p class="text-4xl font-medium text-green-600 mb-3"><%= number_to_currency(tool.interest_savings) %></p>
+        <p class="text-sm text-gray-500">saved in interest payments</p>
+      </div>
+      <div>
+        <p class="text-4xl font-medium text-green-600 mb-3"><%= tool.months_saved_formatted %></p>
+        <p class="text-sm text-gray-500">earlier payoff date</p>
+      </div>
+    </div>
+  </div>
+  <div class="grid grid-cols-2 gap-4 mb-6">
     <div>
-      <p class="text-sm text-gray-500">Interest savings</p>
-      <p class="text-xl font-medium"><%= number_to_currency(tool.interest_savings) %></p>
+      <p class="text-sm text-gray-500 mb-2">Original interest</p>
+      <p class="text-xl font-medium"><%= number_to_currency(tool.total_interest) %></p>
     </div>
     <div>
-      <p class="text-sm text-gray-500">New payoff date</p>
+      <p class="text-sm text-gray-500 mb-2">Interest with extra payments</p>
+      <p class="text-xl font-medium"><%= number_to_currency(tool.total_interest_with_extra_payments) %></p>
+    </div>
+    <div>
+      <p class="text-sm text-gray-500 mb-2">Original principal + Interest</p>
+      <p class="text-xl font-medium"><%= number_to_currency(tool.total_payments) %></p>
+    </div>
+    <div>
+      <p class="text-sm text-gray-500 mb-2">Principal + Interest with extra payments</p>
+      <p class="text-xl font-medium"><%= number_to_currency(tool.total_payments_with_extra) %></p>
+    </div>
+    <div>
+      <p class="text-sm text-gray-500 mb-2">Original payoff date</p>
+      <p class="text-xl font-medium"><%= tool.original_payoff_date.strftime("%B %Y") %></p>
+    </div>
+    <div>
+      <p class="text-sm text-gray-500 mb-2">New payoff date</p>
       <p class="text-xl font-medium"><%= tool.new_payoff_date.strftime("%B %Y") %></p>
     </div>
-    <div>
-      <p class="text-sm text-gray-500">Investment balance</p>
-      <p class="text-xl font-medium"><%= number_to_currency(tool.investment_balance) %></p>
+  </div>
+  <div class="mb-6 bg-gradient-to-b to-white from-blue-50 p-6 rounded-2xl flex flex-col gap-4">
+    <div class="text-sm text-gray-500 flex items-center gap-1">
+      <%= lucide_icon("trending-up", class: "size-6 text-blue-600") %>
+      If you invested <span class="text-blue-600"><%= number_to_currency(tool.additional_payment) %></span> every month at <%= number_to_percentage(tool.annual_investment_return, precision: 0) %> annual return instead
+    </div>
+    <div class="flex flex-col gap-3">
+      <p class="text-4xl font-medium text-blue-600"><%= number_to_currency(tool.investment_balance) %></p>
+      <p class="text-sm text-gray-500">would be your investment account balance</p>
     </div>
   </div>
-
-  <div class="mt-4">
-    <p class="text-sm text-gray-500">Net difference (Investment value - Interest savings)</p>
-    <p class="text-xl font-medium"><%= number_to_currency(tool.net_difference) %></p>
+  <%= tag.div class: "h-96 mb-6", data: {
+    controller: "time-series-two-lines-chart",
+    time_series_two_lines_chart_data_value: tool.plot_data.to_json,
+    time_series_two_lines_chart_series_value: tool.legend_data.to_json
+  } %>
+  <div class="mb-6 bg-gradient-to-b to-white from-green-50 p-6 rounded-2xl flex flex-col gap-4">
+    <div class="text-sm text-gray-500 flex items-center gap-1">
+      <%= lucide_icon("check-circle-2", class: "size-6 text-green-600") %>
+      If we compared the two scenarios
+    </div>
+    <div class="flex flex-col gap-3">
+      <p class="text-4xl font-medium text-green-600"><%= number_to_currency(tool.net_difference) %></p>
+      <p class="text-sm text-gray-500">would be your net difference (Investment value - Interest savings)</p>
+    </div>
+    <span class="inline-flex items-center text-sm font-medium text-green-600 bg-green-400/5 px-3 py-1 rounded-full w-16">
+      <%= lucide_icon("lightbulb", class: "size-4 mr-1") %>
+      TIP
+    </span>
+    <p class="text-sm text-gray-700">Investing the extra payments could potentially yield better returns versus paying off the mortgage early</p>
   </div>
-
-  <%= tag.div class: "h-96 mt-6", data: {
-        controller: "time-series-two-lines-chart",
-        time_series_two_lines_chart_data_value: tool.plot_data.to_json,
-        time_series_two_lines_chart_series_value: tool.legend_data.to_json
-      } %>
 </div>
