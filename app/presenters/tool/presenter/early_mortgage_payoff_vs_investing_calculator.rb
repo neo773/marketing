@@ -1,9 +1,9 @@
 class Tool::Presenter::EarlyMortgagePayoffVsInvestingCalculator < Tool::Presenter
-  attribute :loan_amount, :tool_float, default: 300000.0
-  attribute :loan_term, :tool_integer, default: 30
-  attribute :interest_rate, :tool_percentage, default: 3.5
-  attribute :additional_payment, :tool_float, default: 500.0
-  attribute :annual_investment_return, :tool_percentage, default: 7.0
+  attribute :loan_amount, :tool_float, default: 0
+  attribute :loan_term, :tool_integer, default: 0
+  attribute :interest_rate, :tool_percentage, default: 0
+  attribute :additional_payment, :tool_float, default: 0
+  attribute :annual_investment_return, :tool_percentage, default: 0
   attribute :elapsed_time, :tool_integer, default: 0
 
   def blank?
