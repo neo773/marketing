@@ -17,7 +17,7 @@
   <div class="mt-6"></div>
   <span class="text-sm text-gray-900 font-medium">Additional payment</span>
   <div class="relative flex flex-col gap-2">
-    <%= form.unit_field :additional_payment, label: "Additional payment", value: tool.additional_payment, unit_symbol: "$", data: { controller: "autonumeric" } %>
+    <%= form.unit_field :additional_payment, label: "Additional payment", value: tool.additional_payment, unit_symbol: "$", label_right: "monthly", data: { controller: "autonumeric" } %>
   </div>
   <div class="mt-6"></div>
   <span class="text-sm text-gray-900 font-medium">Investment details</span>
