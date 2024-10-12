@@ -33,6 +33,7 @@ class ToolsController < ApplicationController
         # Early Mortgage Payoff vs Investing Calculator
         :loan_amount, :loan_term, :interest_rate, :additional_payment, :annual_investment_return, :elapsed_time,
         :total_interest, :total_interest_with_extra_payments, :total_payments, :total_payments_with_extra,
-        :original_payoff_date, :new_payoff_date, :interest_savings, :months_saved, :investment_balance, :net_difference
+        :original_payoff_date, :new_payoff_date, :interest_savings, :months_saved, :investment_balance, :net_difference,
+        :net_difference_class, :icon_class, :tip_text
     end
 end
